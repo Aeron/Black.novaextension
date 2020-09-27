@@ -1,0 +1,73 @@
+{
+    "identifier": "cc.aeron.nova-black",
+    "name": "Black",
+    "organization": "Aeron",
+    "description": "Black, the uncompromising Python code formatter, for Nova.",
+    "version": "0.1.0",
+    "categories": ["formatters", "commands"],
+    "repository": "https://github.com/Aeron/Black.novaextension",
+    "bugs": "https://github.com/Aeron/Black.novaextension/issues",
+    "license": "Apache-2.0",
+    "main": "main.js",
+    "activationEvents": [
+        "onLanguage:python"
+    ],
+    "entitlements": {
+        "process": true
+    },
+    "commands": {
+        "editor": [
+            {
+                "title": "Format with Black",
+                "command": "formatWithBlack",
+                "shortcut": "cmd-shift-B",
+                "filters": {
+                    "syntaxes": ["python"]
+                }
+            }
+        ]
+    },
+    "config": [
+        {
+            "key": "cc.aeron.nova-black.executablePath",
+            "title": "Executable Path",
+            "description": "Path to the Black executable.",
+            "type": "path",
+            "default": "/usr/local/bin/black"
+        },
+        {
+            "key": "cc.aeron.nova-black.commandArguments",
+            "title": "Command Arguments",
+            "description": "Additional arguments. The --quiet option always set.",
+            "type": "string",
+            "default": null
+        },
+        {
+            "key": "cc.aeron.nova-black.formatOnSave",
+            "title": "Format a file on save.",
+            "type": "boolean",
+            "default": true
+        }
+    ],
+    "configWorkspace": [
+        {
+            "key": "cc.aeron.nova-black.executablePath",
+            "title": "Executable Path",
+            "description": "Path to the Black executable.",
+            "type": "path",
+            "placeholder": "/usr/local/bin/black"
+        },
+        {
+            "key": "cc.aeron.nova-black.commandArguments",
+            "title": "Command Arguments",
+            "description": "Additional arguments. The --quiet option always set.",
+            "type": "string"
+        },
+        {
+            "key": "cc.aeron.nova-black.formatOnSave",
+            "title": "Format a file on save.",
+            "type": "boolean",
+            "default": true
+        }
+    ]
+}
