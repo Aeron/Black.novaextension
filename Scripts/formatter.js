@@ -4,9 +4,9 @@ class Formatter {
     }
 
     async getProcess() {
-        let executablePath = this.config.get("executablePath");
-        let commandArguments = this.config.get("commandArguments");
-        let defaultOptions = ["--quiet", "-"];
+        const executablePath = this.config.get("executablePath");
+        const commandArguments = this.config.get("commandArguments");
+        const defaultOptions = ["--quiet", "-"];
 
         var options = [];
 
@@ -37,8 +37,8 @@ class Formatter {
         const content = editor.document.getTextInRange(textRange);
         const filePath = nova.workspace.relativizePath(editor.document.path);
 
-        var outBuffer = [];
-        var errBuffer = [];
+        let outBuffer = [];
+        let errBuffer = [];
 
         const process = await this.getProcess();
 
@@ -51,7 +51,7 @@ class Formatter {
                 const formattedContent = outBuffer.join("");
 
                 editor.edit((edit) => {
-                    if (formattedContent != content) {
+                    if (formattedContent !== content) {
                         console.log("Formatting " + filePath);
                         edit.replace(textRange, formattedContent);
                     } else {
