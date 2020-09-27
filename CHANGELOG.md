@@ -2,6 +2,10 @@
 
 These versions follow [Semantic Versioning 2.0](https://semver.org).
 
+## 0.2.1 (2020-09-28)
+
+Very minor update. The extension icon update.
+
 ## 0.2.0 (2020-09-27)
 
 Minor update. Just more strict declarations (`var`/`let`/`const`).
