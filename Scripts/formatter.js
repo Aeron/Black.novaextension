@@ -30,8 +30,26 @@ class Formatter {
         );
     }
 
-    async format(editor, onSave=false) {
-        if (editor.document.isEmpty) return;
+    async getPromiseToFormat(editor) {
+        if (!this.config.get("formatOnSave")) return;
+
+        return new Promise((resolve, reject) => {
+            this.format(editor, resolve, reject);
+        });
+    }
+
+    async format(editor, resolve=null, reject=null) {
+        if (editor.document.isEmpty) {
+            if (resolve) resolve();
+            return;
+        }
+
+        let process = await this.getProcess();
+
+        if (!process) {
+            if (reject) reject();
+            return;
+        }
 
         const textRange = new Range(0, editor.document.length);
         const content = editor.document.getTextInRange(textRange);
@@ -40,29 +58,25 @@ class Formatter {
         let outBuffer = [];
         let errBuffer = [];
 
-        const process = await this.getProcess();
-
-        if (!process) return;
-
         process.onStdout((output) => outBuffer.push(output));
         process.onStderr((error) => errBuffer.push(error));
         process.onDidExit((status) => {
             if (status === 0) {
                 const formattedContent = outBuffer.join("");
 
-                editor.edit((edit) => {
+                let result = editor.edit((edit) => {
                     if (formattedContent !== content) {
                         console.log("Formatting " + filePath);
-                        edit.replace(textRange, formattedContent);
+                        edit.replace(textRange, formattedContent, InsertTextFormat.PlainText);
                     } else {
                         console.log("Nothing to format");
                     }
                 });
 
-                // NOTE: it's the only way to really-really save a file
-                if (onSave) editor.save();
+                if (resolve) resolve(result);
             } else {
                 console.error(errBuffer.join(""));
+                if (reject) reject();
             }
         });
 
@@ -70,7 +84,7 @@ class Formatter {
 
         process.start();
 
-        const writer = process.stdin.getWriter();
+        let writer = process.stdin.getWriter();
 
         writer.ready.then(() => {
             writer.write(content);
