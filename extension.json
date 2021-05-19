@@ -44,7 +44,7 @@
         },
         {
             "key": "cc.aeron.nova-black.formatOnSave",
-            "title": "Format a file on save.",
+            "title": "Format on a file save",
             "type": "boolean",
             "default": true
         }
@@ -65,7 +65,7 @@
         },
         {
             "key": "cc.aeron.nova-black.formatOnSave",
-            "title": "Format a file on save.",
+            "title": "Format on a file save",
             "type": "boolean",
             "default": true
         }
