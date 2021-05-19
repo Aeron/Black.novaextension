@@ -2,6 +2,10 @@
 
 These versions follow [Semantic Versioning 2.0](https://semver.org).
 
+## 1.0.0 (2021-05-19)
+
+Formatter functionality update. Major version bump.
+
 ## 0.2.1 (2020-09-28)
 
 Very minor update. The extension icon update.
