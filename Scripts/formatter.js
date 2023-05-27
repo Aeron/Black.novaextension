@@ -4,9 +4,14 @@ class Formatter {
     }
 
     async getProcess() {
-        const executablePath = this.config.get("executablePath");
+        const executablePath = nova.path.expanduser(this.config.get("executablePath"));
         const commandArguments = this.config.get("commandArguments");
         const defaultOptions = ["--quiet", "-"];
+
+        if (!nova.fs.stat(executablePath)) {
+            console.error(`Executable ${executablePath} does not exist`);
+            return;
+        }
 
         var options = [];
 
@@ -40,14 +45,14 @@ class Formatter {
 
     async format(editor, resolve=null, reject=null) {
         if (editor.document.isEmpty) {
-            if (resolve) resolve();
+            if (reject) reject("empty file");
             return;
         }
 
         let process = await this.getProcess();
 
         if (!process) {
-            if (reject) reject();
+            if (reject) reject("no process");
             return;
         }
 
