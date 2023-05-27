@@ -13,7 +13,8 @@
         "onLanguage:python"
     ],
     "entitlements": {
-        "process": true
+        "process": true,
+        "filesystem": "readonly"
     },
     "commands": {
         "editor": [
