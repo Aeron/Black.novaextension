@@ -39,7 +39,7 @@
         {
             "key": "cc.aeron.nova-black.commandArguments",
             "title": "Command Arguments",
-            "description": "Additional arguments. The --quiet option always set.",
+            "description": "Additional arguments. The --quiet option is always set. The --stdin-filename is set conditionally.",
             "type": "string",
             "default": null
         },
@@ -61,7 +61,7 @@
         {
             "key": "cc.aeron.nova-black.commandArguments",
             "title": "Command Arguments",
-            "description": "Additional arguments. The --quiet option always set.",
+            "description": "Additional arguments. The --quiet option is always set. The --stdin-filename is set conditionally.",
             "type": "string"
         },
         {
