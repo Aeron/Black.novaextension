@@ -6,12 +6,9 @@ class Formatter {
     async getProcess(filename = null) {
         const executablePath = nova.path.expanduser(this.config.get("executablePath"));
         const commandArguments = this.config.get("commandArguments");
-
-        let defaultOptions = ["--quiet"];
-        if (filename !== null) {
-            defaultOptions = defaultOptions.concat(["--stdin-filename", filename]);
-        }
-        defaultOptions.push("-");
+        const defaultOptions = (filename)
+            ? ["--quiet", `--stdin-filename=${filename}`,  "-"]
+            : ["--quiet", "-"];
 
         if (!nova.fs.stat(executablePath)) {
             console.error(`Executable ${executablePath} does not exist`);
@@ -54,13 +51,9 @@ class Formatter {
             return;
         }
 
-        let filename;
-        if (editor.document.isUntitled) {
-            filename = null;
-        } else {
-            filename = nova.path.basename(editor.document.path);
-        }
-        let process = await this.getProcess(filename);
+        let process = await this.getProcess(
+            editor.document.path ? nova.path.basename(editor.document.path) : null
+        );
 
         if (!process) {
             if (reject) reject("no process");
