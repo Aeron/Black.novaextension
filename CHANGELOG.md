@@ -2,6 +2,12 @@
 
 These versions follow [Semantic Versioning 2.0](https://semver.org).
 
+## 1.0.3 (2023-08-27)
+
+### Fixed
+
+- Formatting for `.pyi` files and alike (by @guillaumealgis in #5)
+
 ## 1.0.2 (2023-05-27)
 
 ### Changed
