@@ -3,7 +3,7 @@
     "name": "Black",
     "organization": "Aeron",
     "description": "Black, the uncompromising Python code formatter, for Nova.",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "categories": ["formatters", "commands"],
     "repository": "https://github.com/Aeron/Black.novaextension",
     "bugs": "https://github.com/Aeron/Black.novaextension/issues",
@@ -25,6 +25,13 @@
                 "filters": {
                     "syntaxes": ["python"]
                 }
+            }
+        ],
+        "extensions": [
+            {
+                "title": "Format Workspace with Black",
+                "command": "formatWorkspaceWithBlack",
+                "shortcut": "cmd-shift-opt-B"
             }
         ]
     },
@@ -54,14 +61,14 @@
         {
             "key": "cc.aeron.nova-black.executablePath",
             "title": "Executable Path",
-            "description": "Path to the Black executable.",
+            "description": "Path to the Black executable. Leave blank to use the extension default.",
             "type": "path",
             "placeholder": "/usr/local/bin/black"
         },
         {
             "key": "cc.aeron.nova-black.commandArguments",
             "title": "Command Arguments",
-            "description": "Additional arguments. The --quiet option is always set. The --stdin-filename is set conditionally.",
+            "description": "Additional arguments. The --quiet option is always set. The --stdin-filename is set conditionally. Leave blank to use the extension default.",
             "type": "string"
         },
         {
