@@ -3,9 +3,14 @@ class Formatter {
         this.config = config;
     }
 
-    async getProcess(defaultOptions) {
+    async getProcess(filename = null) {
         const executablePath = nova.path.expanduser(this.config.get("executablePath"));
         const commandArguments = this.config.get("commandArguments");
+        const defaultOptions = (filename)
+            ? (filename !== ".")
+                ? ["--quiet", `--stdin-filename=${filename}`,  "-"]
+                : ["--quiet", filename]
+            : ["--quiet", "-"];
 
         if (!nova.fs.stat(executablePath)) {
             console.error(`Executable ${executablePath} does not exist`);
@@ -48,12 +53,9 @@ class Formatter {
             return;
         }
 
-        const filename = editor.document.path ? nova.path.basename(editor.document.path) : null;
-        const defaultOptions = (filename)
-            ? ["--quiet", `--stdin-filename=${filename}`,  "-"]
-            : ["--quiet", "-"];
-
-        let process = await this.getProcess(defaultOptions);
+        let process = await this.getProcess(
+            editor.document.path ? nova.path.basename(editor.document.path) : null
+        );
 
         if (!process) {
             if (reject) reject("no process");
@@ -102,17 +104,25 @@ class Formatter {
     }
 
     async formatWorkspace(workspace) {
-        let process = await this.getProcess(["--quiet", "."]);
+        let process = await this.getProcess(".");
+
         if (!process) {
             return;
         }
+
+        let errBuffer = [];
+
+        process.onStderr((error) => errBuffer.push(error));
+        process.onDidExit((status) => {
+            if (status === 0) {
+                console.log("Formatting the workspace");
+            } else {
+                console.error(errBuffer.join(""));
+            }
+        });
+
         console.log("Running " + process.command + " " + process.args.join(" "));
-        process.onStdout((output) => {
-            console.log(output);
-        });
-        process.onStderr((error) => {
-            console.error(error);
-        });
+
         process.start();
     }
 }
