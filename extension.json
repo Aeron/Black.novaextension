@@ -61,14 +61,14 @@
         {
             "key": "cc.aeron.nova-black.executablePath",
             "title": "Executable Path",
-            "description": "Path to the Black executable. Leave blank to use the extension default.",
+            "description": "Path to the Black executable.",
             "type": "path",
             "placeholder": "/usr/local/bin/black"
         },
         {
             "key": "cc.aeron.nova-black.commandArguments",
             "title": "Command Arguments",
-            "description": "Additional arguments. The --quiet option is always set. The --stdin-filename is set conditionally. Leave blank to use the extension default.",
+            "description": "Additional arguments. The --quiet option is always set. The --stdin-filename is set conditionally.",
             "type": "string"
         },
         {
