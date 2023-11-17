@@ -7,7 +7,9 @@ class Formatter {
         const executablePath = nova.path.expanduser(this.config.get("executablePath"));
         const commandArguments = this.config.get("commandArguments");
         const defaultOptions = (filename)
-            ? ["--quiet", `--stdin-filename=${filename}`,  "-"]
+            ? (filename !== ".")
+                ? ["--quiet", `--stdin-filename=${filename}`,  "-"]
+                : ["--quiet", filename]
             : ["--quiet", "-"];
 
         if (!nova.fs.stat(executablePath)) {
@@ -99,6 +101,29 @@ class Formatter {
             writer.write(content);
             writer.close();
         });
+    }
+
+    async formatWorkspace(workspace) {
+        let process = await this.getProcess(".");
+
+        if (!process) {
+            return;
+        }
+
+        let errBuffer = [];
+
+        process.onStderr((error) => errBuffer.push(error));
+        process.onDidExit((status) => {
+            if (status === 0) {
+                console.log("Formatting the workspace");
+            } else {
+                console.error(errBuffer.join(""));
+            }
+        });
+
+        console.log("Running " + process.command + " " + process.args.join(" "));
+
+        process.start();
     }
 }
 

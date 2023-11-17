@@ -15,4 +15,7 @@ exports.activate = function() {
     });
 
     nova.commands.register("formatWithBlack", formatter.format, formatter);
+    nova.commands.register(
+        "formatWorkspaceWithBlack", formatter.formatWorkspace, formatter
+    );
 };

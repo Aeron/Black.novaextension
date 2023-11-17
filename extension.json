@@ -3,7 +3,7 @@
     "name": "Black",
     "organization": "Aeron",
     "description": "Black, the uncompromising Python code formatter, for Nova.",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "categories": ["formatters", "commands"],
     "repository": "https://github.com/Aeron/Black.novaextension",
     "bugs": "https://github.com/Aeron/Black.novaextension/issues",
@@ -25,6 +25,13 @@
                 "filters": {
                     "syntaxes": ["python"]
                 }
+            }
+        ],
+        "extensions": [
+            {
+                "title": "Format Workspace with Black",
+                "command": "formatWorkspaceWithBlack",
+                "shortcut": "cmd-shift-opt-B"
             }
         ]
     },
