@@ -2,9 +2,12 @@
 
 These versions follow [Semantic Versioning 2.0](https://semver.org).
 
-## 1.0.4 (2023-mm-dd)
+## 1.0.4 (2023-11-17)
 
-- Added a `Format Workspace with Black` command, to run Black on the entire workspace directory (by @dcwatson in #6)
+### Added
+
+- The `Format Workspace with Black` command, to run Black on the entire workspace
+  (by @dcwatson in #6)
 
 ## 1.0.3 (2023-08-27)
 
