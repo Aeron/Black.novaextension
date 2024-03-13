@@ -2,6 +2,18 @@
 
 These versions follow [Semantic Versioning 2.0](https://semver.org).
 
+## 1.1.0 (2024-03-13)
+
+It’s mainly refactoring and optimizations, except for a minor feature and a fix.
+
+### Added
+
+- Configuration observation for the format on save setting
+
+### Fixed
+
+- The workspace’s format on save setting
+
 ## 1.0.4 (2023-11-17)
 
 ### Added
