@@ -4,7 +4,10 @@
     "organization": "Aeron",
     "description": "Black, the uncompromising Python code formatter, for Nova.",
     "version": "1.0.4",
-    "categories": ["formatters", "commands"],
+    "categories": [
+        "formatters",
+        "commands"
+    ],
     "repository": "https://github.com/Aeron/Black.novaextension",
     "bugs": "https://github.com/Aeron/Black.novaextension/issues",
     "license": "Apache-2.0",
@@ -23,7 +26,9 @@
                 "command": "formatWithBlack",
                 "shortcut": "cmd-shift-B",
                 "filters": {
-                    "syntaxes": ["python"]
+                    "syntaxes": [
+                        "python"
+                    ]
                 }
             }
         ],
@@ -74,8 +79,22 @@
         {
             "key": "cc.aeron.nova-black.formatOnSave",
             "title": "Format on a file save",
-            "type": "boolean",
-            "default": true
+            "type": "enum",
+            "values": [
+                [
+                    -1,
+                    "Global"
+                ],
+                [
+                    1,
+                    "Yes"
+                ],
+                [
+                    0,
+                    "No"
+                ]
+            ],
+            "default": -1
         }
     ]
 }

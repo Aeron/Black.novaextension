@@ -1,17 +1,27 @@
 const Config = require("./Config");
 const Formatter = require("./Formatter");
 
-exports.activate = function() {
-    const config = new Config();
-    const formatter = new Formatter(config);
+exports.activate = function () {
+    const formatter = new Formatter(Config);
 
-    console.info("Executable path: " + config.get("executablePath"));
-    console.info("Command arguments: " + config.get("commandArguments"));
-    console.info("Format on save: " + config.get("formatOnSave"));
+    console.info(`Executable path: ${Config.executablePath()}`);
+    console.info(`Command arguments: ${Config.commandArguments()}`);
+    console.info(`Format on save: ${Config.formatOnSave()}`);
 
     nova.workspace.onDidAddTextEditor((editor) => {
         if (editor.document.syntax !== "python") return;
-        editor.onWillSave(formatter.getPromiseToFormat, formatter);
+
+        var event = null;
+
+        Config.observe("formatOnSave", () => {
+            if (event) event.dispose();
+
+            if (Config.formatOnSave()) {
+                event = editor.onWillSave(formatter.provideFormat, formatter);
+            } else {
+                event = null;
+            }
+        });
     });
 
     nova.commands.register("formatWithBlack", formatter.format, formatter);

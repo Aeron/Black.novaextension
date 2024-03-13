@@ -3,57 +3,58 @@ class Formatter {
         this.config = config;
     }
 
-    async getProcess(filename = null) {
-        const executablePath = nova.path.expanduser(this.config.get("executablePath"));
-        const commandArguments = this.config.get("commandArguments");
+    getProcessOptions(filename = null) {
         const defaultOptions = (filename)
             ? (filename !== ".")
-                ? ["--quiet", `--stdin-filename=${filename}`,  "-"]
+                ? ["--quiet", `--stdin-filename=${filename}`, "-"]
                 : ["--quiet", filename]
             : ["--quiet", "-"];
+
+        const commandArguments = this.config.commandArguments();
+        const extraOptions = (commandArguments)
+            ? commandArguments
+                .split("\n")
+                .map((option) => option.trim())
+            : [];
+
+        return Array.from(
+            new Set(
+                [...extraOptions, ...defaultOptions].filter((option) => option !== "")
+            )
+        );
+    }
+
+    getProcess(filename = null) {
+        const executablePath = nova.path.expanduser(this.config.executablePath());
 
         if (!nova.fs.stat(executablePath)) {
             console.error(`Executable ${executablePath} does not exist`);
             return;
         }
 
-        var options = [];
-
-        if (commandArguments) {
-            options = commandArguments
-                .replaceAll("\n", " ")
-                .split(" ")
-                .map((option) => option.trim())
-                .filter((option) => option !== " ");
-        }
-
-        options = [...options, ...defaultOptions].filter((option) => option !== "");
+        const options = this.getProcessOptions(filename);
 
         return new Process(
             executablePath,
             {
-                args: Array.from(new Set(options)),
+                args: options,
                 stdio: "pipe",
                 cwd: nova.workspace.path,  // NOTE: must be explicitly set
             }
         );
     }
 
-    async getPromiseToFormat(editor) {
-        if (!this.config.get("formatOnSave")) return;
-
-        return new Promise((resolve, reject) => {
-            this.format(editor, resolve, reject);
-        });
+    provideFormat(editor) {
+        return new Promise((resolve, reject) => this.format(editor, resolve, reject));
     }
 
-    async format(editor, resolve=null, reject=null) {
+    format(editor, resolve = null, reject = null) {
         if (editor.document.isEmpty) {
             if (reject) reject("empty file");
             return;
         }
 
-        let process = await this.getProcess(
+        let process = this.getProcess(
             editor.document.path ? nova.path.basename(editor.document.path) : null
         );
 
@@ -91,7 +92,7 @@ class Formatter {
             }
         });
 
-        console.log("Running " + process.command + " " + process.args.join(" "));
+        console.log(`Running ${process.command} ${process.args.join(" ")}`);
 
         process.start();
 
@@ -103,8 +104,8 @@ class Formatter {
         });
     }
 
-    async formatWorkspace(workspace) {
-        let process = await this.getProcess(".");
+    formatWorkspace() {
+        let process = this.getProcess(".");
 
         if (!process) {
             return;
@@ -121,7 +122,7 @@ class Formatter {
             }
         });
 
-        console.log("Running " + process.command + " " + process.args.join(" "));
+        console.log(`Running ${process.command} ${process.args.join(" ")}`);
 
         process.start();
     }

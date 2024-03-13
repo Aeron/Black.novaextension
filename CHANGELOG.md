@@ -19,13 +19,13 @@ These versions follow [Semantic Versioning 2.0](https://semver.org).
 
 ### Changed
 
-+ Executable path proper expansion
-+ Safer promise behavior for expected errors
+- Executable path proper expansion
+- Safer promise behavior for expected errors
 
 ### Added
 
-+ Error logging for an invalid execution path
-+ Read-only filesystem entitlement
+- Error logging for an invalid execution path
+- Read-only filesystem entitlement
 
 ## 1.0.1 (2022-02-04)
 
