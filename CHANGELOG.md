@@ -2,6 +2,13 @@
 
 These versions follow [Semantic Versioning 2.0](https://semver.org).
 
+## 1.1.1 (2024-03-20)
+
+### Fixed
+
+- Command arguments separator character typo
+- Command long options without the `=` sign
+
 ## 1.1.0 (2024-03-13)
 
 It’s mainly refactoring and optimizations, except for a minor feature and a fix.
