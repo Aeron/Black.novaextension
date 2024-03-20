@@ -4,10 +4,13 @@ These versions follow [Semantic Versioning 2.0](https://semver.org).
 
 ## 1.1.1 (2024-03-20)
 
+This patch contains two fixes for user options: one for a stupid typo and another
+for potential issues with deduplication, uniformity, etc.
+
 ### Fixed
 
-- Command arguments separator character typo
-- Command long options without the `=` sign
+- Command arguments’ separator character typo
+- Command’s long and short user options handling
 
 ## 1.1.0 (2024-03-13)
 
